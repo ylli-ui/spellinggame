@@ -56,14 +56,20 @@
 
         <div class="tug-of-war-container">
             <div class="tug-of-war">
-                <div class="character team-1-char">🧑</div>
+                <div class="team-characters team-1-characters">
+                    <div class="character">👦</div>
+                    <div class="character">👧</div>
+                </div>
                 <div class="rope-container">
                     <svg class="rope-svg" viewBox="0 0 300 100" preserveAspectRatio="xMidYMid meet">
                         <line x1="0" y1="50" x2="300" y2="50" stroke="#8B4513" stroke-width="8"/>
                         <circle id="rope-knot" cx="150" cy="50" r="8" fill="#FF6B6B"/>
                     </svg>
                 </div>
-                <div class="character team-2-char">👧</div>
+                <div class="team-characters team-2-characters">
+                    <div class="character">👧</div>
+                    <div class="character">👦</div>
+                </div>
             </div>
         </div>
 
@@ -75,16 +81,20 @@
         <div class="game-content">
             <div class="team-side team-1-side">
                 <h3 id="team1-input-label">Team 1</h3>
-                <input type="text" id="team1-input" placeholder="Type the answer" class="team-input">
-                <p id="team1-feedback" class="feedback"></p>
+                <div class="keyboard-input">
+                    <input type="text" id="team1-input" placeholder="Type and press ENTER" class="team-input">
+                    <p id="team1-feedback" class="feedback"></p>
+                </div>
             </div>
             
             <div class="divider"></div>
             
             <div class="team-side team-2-side">
                 <h3 id="team2-input-label">Team 2</h3>
-                <input type="text" id="team2-input" placeholder="Type the answer" class="team-input">
-                <p id="team2-feedback" class="feedback"></p>
+                <div class="keyboard-input">
+                    <input type="text" id="team2-input" placeholder="Type and press ENTER" class="team-input">
+                    <p id="team2-feedback" class="feedback"></p>
+                </div>
             </div>
         </div>
 

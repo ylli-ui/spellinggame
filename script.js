@@ -1,15 +1,11 @@
-// Game Configuration
+// Game Configuration - 50 Verbs (Regular and Irregular)
 const VERBS = [
+    // Irregular Verbs
     { base: 'run', past: 'ran', pastParticiple: 'run', presentHeSheIt: 'runs', presentContinuous: 'running' },
     { base: 'go', past: 'went', pastParticiple: 'gone', presentHeSheIt: 'goes', presentContinuous: 'going' },
     { base: 'eat', past: 'ate', pastParticiple: 'eaten', presentHeSheIt: 'eats', presentContinuous: 'eating' },
-    { base: 'play', past: 'played', pastParticiple: 'played', presentHeSheIt: 'plays', presentContinuous: 'playing' },
-    { base: 'walk', past: 'walked', pastParticiple: 'walked', presentHeSheIt: 'walks', presentContinuous: 'walking' },
-    { base: 'jump', past: 'jumped', pastParticiple: 'jumped', presentHeSheIt: 'jumps', presentContinuous: 'jumping' },
     { base: 'swim', past: 'swam', pastParticiple: 'swum', presentHeSheIt: 'swims', presentContinuous: 'swimming' },
     { base: 'sing', past: 'sang', pastParticiple: 'sung', presentHeSheIt: 'sings', presentContinuous: 'singing' },
-    { base: 'dance', past: 'danced', pastParticiple: 'danced', presentHeSheIt: 'dances', presentContinuous: 'dancing' },
-    { base: 'study', past: 'studied', pastParticiple: 'studied', presentHeSheIt: 'studies', presentContinuous: 'studying' },
     { base: 'write', past: 'wrote', pastParticiple: 'written', presentHeSheIt: 'writes', presentContinuous: 'writing' },
     { base: 'read', past: 'read', pastParticiple: 'read', presentHeSheIt: 'reads', presentContinuous: 'reading' },
     { base: 'speak', past: 'spoke', pastParticiple: 'spoken', presentHeSheIt: 'speaks', presentContinuous: 'speaking' },
@@ -19,14 +15,49 @@ const VERBS = [
     { base: 'sit', past: 'sat', pastParticiple: 'sat', presentHeSheIt: 'sits', presentContinuous: 'sitting' },
     { base: 'stand', past: 'stood', pastParticiple: 'stood', presentHeSheIt: 'stands', presentContinuous: 'standing' },
     { base: 'fall', past: 'fell', pastParticiple: 'fallen', presentHeSheIt: 'falls', presentContinuous: 'falling' },
-    { base: 'catch', past: 'caught', pastParticiple: 'caught', presentHeSheIt: 'catches', presentContinuous: 'catching' }
+    { base: 'catch', past: 'caught', pastParticiple: 'caught', presentHeSheIt: 'catches', presentContinuous: 'catching' },
+    { base: 'give', past: 'gave', pastParticiple: 'given', presentHeSheIt: 'gives', presentContinuous: 'giving' },
+    { base: 'take', past: 'took', pastParticiple: 'taken', presentHeSheIt: 'takes', presentContinuous: 'taking' },
+    { base: 'see', past: 'saw', pastParticiple: 'seen', presentHeSheIt: 'sees', presentContinuous: 'seeing' },
+    { base: 'come', past: 'came', pastParticiple: 'come', presentHeSheIt: 'comes', presentContinuous: 'coming' },
+    { base: 'meet', past: 'met', pastParticiple: 'met', presentHeSheIt: 'meets', presentContinuous: 'meeting' },
+    { base: 'make', past: 'made', pastParticiple: 'made', presentHeSheIt: 'makes', presentContinuous: 'making' },
+    { base: 'know', past: 'knew', pastParticiple: 'known', presentHeSheIt: 'knows', presentContinuous: 'knowing' },
+    { base: 'get', past: 'got', pastParticiple: 'gotten', presentHeSheIt: 'gets', presentContinuous: 'getting' },
+    { base: 'break', past: 'broke', pastParticiple: 'broken', presentHeSheIt: 'breaks', presentContinuous: 'breaking' },
+    { base: 'choose', past: 'chose', pastParticiple: 'chosen', presentHeSheIt: 'chooses', presentContinuous: 'choosing' },
+    { base: 'drink', past: 'drank', pastParticiple: 'drunk', presentHeSheIt: 'drinks', presentContinuous: 'drinking' },
+    { base: 'drive', past: 'drove', pastParticiple: 'driven', presentHeSheIt: 'drives', presentContinuous: 'driving' },
+    { base: 'fly', past: 'flew', pastParticiple: 'flown', presentHeSheIt: 'flies', presentContinuous: 'flying' },
+    { base: 'grow', past: 'grew', pastParticiple: 'grown', presentHeSheIt: 'grows', presentContinuous: 'growing' },
+    { base: 'hide', past: 'hid', pastParticiple: 'hidden', presentHeSheIt: 'hides', presentContinuous: 'hiding' },
+    // Regular Verbs (with different spelling patterns)
+    { base: 'play', past: 'played', pastParticiple: 'played', presentHeSheIt: 'plays', presentContinuous: 'playing' },
+    { base: 'walk', past: 'walked', pastParticiple: 'walked', presentHeSheIt: 'walks', presentContinuous: 'walking' },
+    { base: 'jump', past: 'jumped', pastParticiple: 'jumped', presentHeSheIt: 'jumps', presentContinuous: 'jumping' },
+    { base: 'dance', past: 'danced', pastParticiple: 'danced', presentHeSheIt: 'dances', presentContinuous: 'dancing' },
+    { base: 'study', past: 'studied', pastParticiple: 'studied', presentHeSheIt: 'studies', presentContinuous: 'studying' },
+    { base: 'copy', past: 'copied', pastParticiple: 'copied', presentHeSheIt: 'copies', presentContinuous: 'copying' },
+    { base: 'try', past: 'tried', pastParticiple: 'tried', presentHeSheIt: 'tries', presentContinuous: 'trying' },
+    { base: 'cry', past: 'cried', pastParticiple: 'cried', presentHeSheIt: 'cries', presentContinuous: 'crying' },
+    { base: 'stop', past: 'stopped', pastParticiple: 'stopped', presentHeSheIt: 'stops', presentContinuous: 'stopping' },
+    { base: 'plan', past: 'planned', pastParticiple: 'planned', presentHeSheIt: 'plans', presentContinuous: 'planning' },
+    { base: 'shop', past: 'shopped', pastParticiple: 'shopped', presentHeSheIt: 'shops', presentContinuous: 'shopping' },
+    { base: 'hope', past: 'hoped', pastParticiple: 'hoped', presentHeSheIt: 'hopes', presentContinuous: 'hoping' },
+    { base: 'love', past: 'loved', pastParticiple: 'loved', presentHeSheIt: 'loves', presentContinuous: 'loving' },
+    { base: 'change', past: 'changed', pastParticiple: 'changed', presentHeSheIt: 'changes', presentContinuous: 'changing' },
+    { base: 'smile', past: 'smiled', pastParticiple: 'smiled', presentHeSheIt: 'smiles', presentContinuous: 'smiling' },
+    { base: 'live', past: 'lived', pastParticiple: 'lived', presentHeSheIt: 'lives', presentContinuous: 'living' },
+    { base: 'arrive', past: 'arrived', pastParticiple: 'arrived', presentHeSheIt: 'arrives', presentContinuous: 'arriving' },
+    { base: 'pass', past: 'passed', pastParticiple: 'passed', presentHeSheIt: 'passes', presentContinuous: 'passing' },
+    { base: 'miss', past: 'missed', pastParticiple: 'missed', presentHeSheIt: 'misses', presentContinuous: 'missing' }
 ];
 
 const TENSES = [
     { key: 'past', label: 'Type the past tense' },
     { key: 'pastParticiple', label: 'Type the past participle' },
     { key: 'presentHeSheIt', label: 'Type the present tense (he/she/it)' },
-    { key: 'presentContinuous', label: 'Type the present continuous tense' }
+    { key: 'presentContinuous', label: 'Type the present continuous tense (-ing)' }
 ];
 
 // Game State
@@ -41,7 +72,9 @@ let gameState = {
     gameActive: false,
     timeRemaining: 60,
     ropePosition: 150, // Center position
-    timerInterval: null
+    timerInterval: null,
+    team1Submitted: false,
+    team2Submitted: false
 };
 
 // DOM Elements
@@ -80,6 +113,8 @@ function startGame() {
     gameState.currentTenseIndex = 0;
     gameState.ropePosition = 150;
     gameState.gameActive = true;
+    gameState.team1Submitted = false;
+    gameState.team2Submitted = false;
 
     // Update UI
     document.getElementById('team1-name-display').textContent = gameState.team1Name;
@@ -111,6 +146,9 @@ function loadNextQuestion() {
     team2Feedback.textContent = '';
     team1Feedback.className = 'feedback';
     team2Feedback.className = 'feedback';
+    
+    gameState.team1Submitted = false;
+    gameState.team2Submitted = false;
 
     updateScoreDisplay();
 }
@@ -122,6 +160,10 @@ function handleKeyPress(e, team) {
     
     e.preventDefault();
     
+    // Check if already submitted
+    if (team === 'team1' && gameState.team1Submitted) return;
+    if (team === 'team2' && gameState.team2Submitted) return;
+    
     const input = team === 'team1' ? team1Input.value.trim().toLowerCase() : team2Input.value.trim().toLowerCase();
     const feedback = team === 'team1' ? team1Feedback : team2Feedback;
     const currentVerb = VERBS[gameState.currentVerbIndex];
@@ -131,6 +173,13 @@ function handleKeyPress(e, team) {
     if (input === '') return;
     
     const isCorrect = input === correctAnswer;
+    
+    // Mark as submitted
+    if (team === 'team1') {
+        gameState.team1Submitted = true;
+    } else {
+        gameState.team2Submitted = true;
+    }
     
     if (isCorrect) {
         feedback.textContent = '✓ Correct!';
@@ -143,8 +192,13 @@ function handleKeyPress(e, team) {
             gameState.team2Score++;
             moveRope('team2');
         }
-        
-        // Move to next question after a short delay
+    } else {
+        feedback.textContent = `✗ Wrong! Correct: ${correctAnswer}`;
+        feedback.className = 'feedback incorrect';
+    }
+    
+    // Check if both teams have submitted
+    if (gameState.team1Submitted && gameState.team2Submitted) {
         setTimeout(() => {
             gameState.currentTenseIndex++;
             if (gameState.currentTenseIndex >= TENSES.length) {
@@ -155,21 +209,7 @@ function handleKeyPress(e, team) {
                 }
             }
             loadNextQuestion();
-        }, 1000);
-    } else {
-        feedback.textContent = `✗ Wrong! Correct: ${correctAnswer}`;
-        feedback.className = 'feedback incorrect';
-        
-        // Clear input after showing error
-        setTimeout(() => {
-            if (team === 'team1') {
-                team1Input.value = '';
-                team1Input.focus();
-            } else {
-                team2Input.value = '';
-                team2Input.focus();
-            }
-        }, 2000);
+        }, 1500);
     }
 }
 
@@ -185,11 +225,11 @@ function moveRope(team) {
     
     // Add animation
     if (team === 'team1') {
-        document.querySelector('.team-1-char').classList.add('correct-answer');
-        setTimeout(() => document.querySelector('.team-1-char').classList.remove('correct-answer'), 500);
+        document.querySelector('.team-1-characters').classList.add('pull-animation');
+        setTimeout(() => document.querySelector('.team-1-characters').classList.remove('pull-animation'), 500);
     } else {
-        document.querySelector('.team-2-char').classList.add('correct-answer');
-        setTimeout(() => document.querySelector('.team-2-char').classList.remove('correct-answer'), 500);
+        document.querySelector('.team-2-characters').classList.add('pull-animation');
+        setTimeout(() => document.querySelector('.team-2-characters').classList.remove('pull-animation'), 500);
     }
 }
 
@@ -254,6 +294,8 @@ function resetGame() {
     gameState.currentTenseIndex = 0;
     gameState.ropePosition = 150;
     gameState.gameActive = false;
+    gameState.team1Submitted = false;
+    gameState.team2Submitted = false;
     
     // Clear inputs
     team1Input.value = '';
