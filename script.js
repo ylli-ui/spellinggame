@@ -61,21 +61,10 @@ const TENSES = [
 ];
 
 // Generate random questions pool
-let questionsPool = [];
-
-function generateQuestionsPool() {
-    questionsPool = [];
-    // Create all possible question combinations
-    for (let i = 0; i < VERBS.length; i++) {
-        for (let j = 0; j < TENSES.length; j++) {
-            questionsPool.push({ verbIndex: i, tenseIndex: j });
-        }
-    }
-    // Shuffle the pool
-    for (let i = questionsPool.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [questionsPool[i], questionsPool[j]] = [questionsPool[j], questionsPool[i]];
-    }
+function generateRandomQuestion() {
+    const verbIndex = Math.floor(Math.random() * VERBS.length);
+    const tenseIndex = Math.floor(Math.random() * TENSES.length);
+    return { verbIndex, tenseIndex };
 }
 
 // Game State
@@ -85,13 +74,12 @@ let gameState = {
     team1Score: 0,
     team2Score: 0,
     gameDuration: 1,
-    currentQuestionIndex: 0,
     gameActive: false,
     timeRemaining: 60,
     ropePosition: 150,
     timerInterval: null,
-    team1Submitted: false,
-    team2Submitted: false
+    team1Question: null,
+    team2Question: null
 };
 
 // Keyboard layout
@@ -111,8 +99,10 @@ const team1Input = document.getElementById('team1-input');
 const team2Input = document.getElementById('team2-input');
 const team1Feedback = document.getElementById('team1-feedback');
 const team2Feedback = document.getElementById('team2-feedback');
-const verbBase = document.getElementById('verb-base');
-const tenseLabel = document.getElementById('tense-label');
+const team1VerbBase = document.getElementById('team1-verb-base');
+const team1TenseLabel = document.getElementById('team1-tense-label');
+const team2VerbBase = document.getElementById('team2-verb-base');
+const team2TenseLabel = document.getElementById('team2-tense-label');
 const timer = document.getElementById('timer');
 const ropeKnot = document.getElementById('rope-knot');
 const team1Score = document.getElementById('team1-score');
@@ -179,14 +169,8 @@ function startGame() {
     gameState.timeRemaining = gameState.gameDuration;
     gameState.team1Score = 0;
     gameState.team2Score = 0;
-    gameState.currentQuestionIndex = 0;
     gameState.ropePosition = 150;
     gameState.gameActive = true;
-    gameState.team1Submitted = false;
-    gameState.team2Submitted = false;
-
-    // Generate random questions
-    generateQuestionsPool();
 
     // Update UI
     document.getElementById('team1-name-display').textContent = gameState.team1Name;
@@ -201,35 +185,34 @@ function startGame() {
     // Initialize keyboards
     initializeKeyboards();
 
-    // Start game
-    loadNextQuestion();
+    // Load first questions for both teams
+    loadNextQuestion('team1');
+    loadNextQuestion('team2');
+    
     startTimer();
 }
 
-function loadNextQuestion() {
-    if (gameState.currentQuestionIndex >= questionsPool.length) {
-        generateQuestionsPool();
-        gameState.currentQuestionIndex = 0;
+function loadNextQuestion(team) {
+    const question = generateRandomQuestion();
+    const verb = VERBS[question.verbIndex];
+    const tense = TENSES[question.tenseIndex];
+    
+    if (team === 'team1') {
+        gameState.team1Question = question;
+        team1VerbBase.textContent = verb.base;
+        team1TenseLabel.textContent = tense.label;
+        team1Input.value = '';
+        team1Feedback.textContent = '';
+        team1Feedback.className = 'feedback';
+    } else {
+        gameState.team2Question = question;
+        team2VerbBase.textContent = verb.base;
+        team2TenseLabel.textContent = tense.label;
+        team2Input.value = '';
+        team2Feedback.textContent = '';
+        team2Feedback.className = 'feedback';
     }
     
-    const currentQuestion = questionsPool[gameState.currentQuestionIndex];
-    const currentVerb = VERBS[currentQuestion.verbIndex];
-    const currentTense = TENSES[currentQuestion.tenseIndex];
-    
-    verbBase.textContent = currentVerb.base;
-    tenseLabel.textContent = currentTense.label;
-    
-    team1Input.value = '';
-    team2Input.value = '';
-    
-    team1Feedback.textContent = '';
-    team2Feedback.textContent = '';
-    team1Feedback.className = 'feedback';
-    team2Feedback.className = 'feedback';
-    
-    gameState.team1Submitted = false;
-    gameState.team2Submitted = false;
-
     updateScoreDisplay();
 }
 
@@ -244,28 +227,17 @@ function handleKeyPress(e, team) {
 function handleSubmit(team) {
     if (!gameState.gameActive) return;
     
-    // Check if already submitted
-    if (team === 'team1' && gameState.team1Submitted) return;
-    if (team === 'team2' && gameState.team2Submitted) return;
-    
     const input = team === 'team1' ? team1Input.value.trim().toLowerCase() : team2Input.value.trim().toLowerCase();
     const feedback = team === 'team1' ? team1Feedback : team2Feedback;
+    const question = team === 'team1' ? gameState.team1Question : gameState.team2Question;
     
-    const currentQuestion = questionsPool[gameState.currentQuestionIndex];
-    const currentVerb = VERBS[currentQuestion.verbIndex];
-    const currentTense = TENSES[currentQuestion.tenseIndex];
-    const correctAnswer = currentVerb[currentTense.key].toLowerCase();
+    if (!question || input === '') return;
     
-    if (input === '') return;
+    const verb = VERBS[question.verbIndex];
+    const tense = TENSES[question.tenseIndex];
+    const correctAnswer = verb[tense.key].toLowerCase();
     
     const isCorrect = input === correctAnswer;
-    
-    // Mark as submitted
-    if (team === 'team1') {
-        gameState.team1Submitted = true;
-    } else {
-        gameState.team2Submitted = true;
-    }
     
     if (isCorrect) {
         feedback.textContent = '✓ Correct!';
@@ -273,22 +245,29 @@ function handleSubmit(team) {
         
         if (team === 'team1') {
             gameState.team1Score++;
-            moveRope('team1');
         } else {
             gameState.team2Score++;
-            moveRope('team2');
         }
+        
+        moveRope(team);
+        updateScoreDisplay();
+        
+        // Load next question for this team immediately
+        setTimeout(() => {
+            loadNextQuestion(team);
+        }, 800);
     } else {
         feedback.textContent = `✗ Wrong! Correct: ${correctAnswer}`;
         feedback.className = 'feedback incorrect';
-    }
-    
-    // Check if both teams have submitted
-    if (gameState.team1Submitted && gameState.team2Submitted) {
+        
+        // Clear input after showing error
         setTimeout(() => {
-            gameState.currentQuestionIndex++;
-            loadNextQuestion();
-        }, 1500);
+            if (team === 'team1') {
+                team1Input.value = '';
+            } else {
+                team2Input.value = '';
+            }
+        }, 2000);
     }
 }
 
@@ -360,11 +339,10 @@ function resetGame() {
     // Reset state
     gameState.team1Score = 0;
     gameState.team2Score = 0;
-    gameState.currentQuestionIndex = 0;
     gameState.ropePosition = 150;
     gameState.gameActive = false;
-    gameState.team1Submitted = false;
-    gameState.team2Submitted = false;
+    gameState.team1Question = null;
+    gameState.team2Question = null;
     
     // Clear inputs
     team1Input.value = '';
