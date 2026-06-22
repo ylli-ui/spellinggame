@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Verb Tug of War</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="setup-screen" class="screen active">
+        <div class="setup-container">
+            <h1>🎮 English Verb Tug of War</h1>
+            <p class="subtitle">Learn English verbs while playing with your team!</p>
+            
+            <div class="setup-form">
+                <div class="form-group">
+                    <label for="team1-name">Team 1 Name:</label>
+                    <input type="text" id="team1-name" placeholder="Enter team 1 name" value="Team 1">
+                </div>
+                
+                <div class="form-group">
+                    <label for="team2-name">Team 2 Name:</label>
+                    <input type="text" id="team2-name" placeholder="Enter team 2 name" value="Team 2">
+                </div>
+                
+                <div class="form-group">
+                    <label for="game-duration">Game Duration (minutes):</label>
+                    <select id="game-duration">
+                        <option value="1">1 minute</option>
+                        <option value="2">2 minutes</option>
+                        <option value="3">3 minutes</option>
+                        <option value="5">5 minutes</option>
+                        <option value="10">10 minutes</option>
+                    </select>
+                </div>
+                
+                <button id="start-btn" class="btn btn-primary">Start Game</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="game-screen" class="screen">
+        <div class="game-header">
+            <div class="team-info team-1-info">
+                <h2 id="team1-name-display">Team 1</h2>
+                <p id="team1-score">Words: 0</p>
+            </div>
+            <div class="timer-container">
+                <div class="timer" id="timer">10:00</div>
+            </div>
+            <div class="team-info team-2-info">
+                <h2 id="team2-name-display">Team 2</h2>
+                <p id="team2-score">Words: 0</p>
+            </div>
+        </div>
+
+        <div class="tug-of-war-container">
+            <div class="tug-of-war">
+                <div class="character team-1-char">🧑</div>
+                <div class="rope-container">
+                    <svg class="rope-svg" viewBox="0 0 300 100" preserveAspectRatio="xMidYMid meet">
+                        <line x1="0" y1="50" x2="300" y2="50" stroke="#8B4513" stroke-width="8"/>
+                        <circle id="rope-knot" cx="150" cy="50" r="8" fill="#FF6B6B"/>
+                    </svg>
+                </div>
+                <div class="character team-2-char">👧</div>
+            </div>
+        </div>
+
+        <div class="question-section">
+            <h2 id="verb-base">run</h2>
+            <p id="tense-label">Type the past tense</p>
+        </div>
+
+        <div class="game-content">
+            <div class="team-side team-1-side">
+                <h3 id="team1-input-label">Team 1</h3>
+                <input type="text" id="team1-input" placeholder="Type the answer" class="team-input">
+                <p id="team1-feedback" class="feedback"></p>
+            </div>
+            
+            <div class="divider"></div>
+            
+            <div class="team-side team-2-side">
+                <h3 id="team2-input-label">Team 2</h3>
+                <input type="text" id="team2-input" placeholder="Type the answer" class="team-input">
+                <p id="team2-feedback" class="feedback"></p>
+            </div>
+        </div>
+
+        <div class="progress-section">
+            <div class="progress-info">
+                <p id="words-count">Words: 0/0</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="end-screen" class="screen">
+        <div class="end-container">
+            <h1>🎉 Game Over!</h1>
+            <div class="winner-section">
+                <h2 id="winner-text">Team 1 Wins!</h2>
+                <p id="final-score">Team 1: 5 | Team 2: 3</p>
+            </div>
+            
+            <div class="stats-section">
+                <h3>Final Results</h3>
+                <div class="stats">
+                    <div class="stat-item">
+                        <p id="team1-final-name">Team 1</p>
+                        <p id="team1-final-score" class="stat-score">5</p>
+                    </div>
+                    <div class="stat-item">
+                        <p id="team2-final-name">Team 2</p>
+                        <p id="team2-final-score" class="stat-score">3</p>
+                    </div>
+                </div>
+            </div>
+            
+            <button id="play-again-btn" class="btn btn-primary">Play Again</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

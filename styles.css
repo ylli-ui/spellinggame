@@ -1,0 +1,489 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.screen {
+    display: none;
+    width: 100%;
+    max-width: 1200px;
+    animation: fadeIn 0.3s ease-in;
+}
+
+.screen.active {
+    display: flex;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Setup Screen */
+#setup-screen {
+    justify-content: center;
+    align-items: center;
+}
+
+.setup-container {
+    background: white;
+    border-radius: 20px;
+    padding: 50px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+}
+
+.setup-container h1 {
+    color: #667eea;
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: #666;
+    font-size: 1.1em;
+    margin-bottom: 40px;
+}
+
+.setup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.form-group input,
+.form-group select {
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1em;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.btn {
+    padding: 14px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+}
+
+/* Game Screen */
+#game-screen {
+    flex-direction: column;
+}
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.team-info {
+    flex: 1;
+    text-align: center;
+}
+
+.team-info h2 {
+    font-size: 1.5em;
+    margin-bottom: 5px;
+}
+
+.team-1-info h2 {
+    color: #FF6B6B;
+}
+
+.team-2-info h2 {
+    color: #4ECDC4;
+}
+
+.team-info p {
+    font-size: 1.1em;
+    font-weight: 600;
+}
+
+.timer-container {
+    flex: 1;
+    text-align: center;
+}
+
+.timer {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #667eea;
+    font-family: 'Courier New', monospace;
+}
+
+/* Tug of War */
+.tug-of-war-container {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.tug-of-war {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    min-height: 120px;
+}
+
+.character {
+    font-size: 60px;
+    animation: bounce 0.6s ease-in-out infinite;
+}
+
+.team-1-char {
+    animation-delay: 0s;
+}
+
+.team-2-char {
+    animation-delay: 0.3s;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.rope-container {
+    flex: 1;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    margin: 0 20px;
+}
+
+.rope-svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* Question Section */
+.question-section {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.question-section h2 {
+    font-size: 2.5em;
+    color: #667eea;
+    margin-bottom: 10px;
+    font-family: 'Courier New', monospace;
+}
+
+.question-section p {
+    font-size: 1.2em;
+    color: #666;
+    font-weight: 600;
+}
+
+/* Game Content */
+.game-content {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.team-side {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.team-side h3 {
+    font-size: 1.3em;
+    margin-bottom: 15px;
+}
+
+.team-1-side h3 {
+    color: #FF6B6B;
+}
+
+.team-2-side h3 {
+    color: #4ECDC4;
+}
+
+.team-input {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.2em;
+    border: 3px solid #ddd;
+    border-radius: 8px;
+    text-align: center;
+    transition: all 0.3s;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+
+.team-input:focus {
+    outline: none;
+    border-color: #667eea;
+    background: #f8f9ff;
+}
+
+.team-1-side .team-input:focus {
+    border-color: #FF6B6B;
+}
+
+.team-2-side .team-input:focus {
+    border-color: #4ECDC4;
+}
+
+.feedback {
+    margin-top: 10px;
+    font-size: 1em;
+    font-weight: 600;
+    min-height: 25px;
+    text-align: center;
+}
+
+.feedback.correct {
+    color: #2ecc71;
+}
+
+.feedback.incorrect {
+    color: #e74c3c;
+}
+
+.feedback.waiting {
+    color: #f39c12;
+}
+
+.divider {
+    width: 3px;
+    height: auto;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 2px;
+}
+
+/* Progress Section */
+.progress-section {
+    background: white;
+    border-radius: 15px;
+    padding: 15px 30px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.progress-info p {
+    font-size: 1.1em;
+    color: #667eea;
+    font-weight: 600;
+}
+
+/* End Screen */
+#end-screen {
+    justify-content: center;
+    align-items: center;
+}
+
+.end-container {
+    background: white;
+    border-radius: 20px;
+    padding: 50px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+}
+
+.end-container h1 {
+    font-size: 2.5em;
+    color: #667eea;
+    margin-bottom: 30px;
+}
+
+.winner-section {
+    margin-bottom: 40px;
+}
+
+.winner-section h2 {
+    font-size: 2em;
+    color: #2ecc71;
+    margin-bottom: 10px;
+}
+
+.winner-section p {
+    font-size: 1.2em;
+    color: #666;
+}
+
+.stats-section h3 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.3em;
+}
+
+.stats {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.stat-item {
+    flex: 1;
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.stat-item p:first-child {
+    font-weight: 600;
+    font-size: 1.1em;
+    margin-bottom: 10px;
+}
+
+.stat-score {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #667eea;
+}
+
+/* Animations */
+@keyframes slideLeft {
+    from {
+        transform: translateX(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideRight {
+    from {
+        transform: translateX(-30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.team-1-char.correct-answer {
+    animation: slideLeft 0.5s ease-out;
+}
+
+.team-2-char.correct-answer {
+    animation: slideRight 0.5s ease-out;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .setup-container {
+        padding: 30px;
+    }
+
+    .setup-container h1 {
+        font-size: 1.8em;
+    }
+
+    .game-content {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .divider {
+        width: 100%;
+        height: 3px;
+        margin: 15px 0;
+    }
+
+    .game-header {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .team-info {
+        flex: 1 1 30%;
+    }
+
+    .timer-container {
+        flex: 1 1 100%;
+    }
+
+    .timer {
+        font-size: 2em;
+    }
+
+    .character {
+        font-size: 40px;
+    }
+
+    .question-section h2 {
+        font-size: 2em;
+    }
+}
