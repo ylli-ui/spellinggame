@@ -82,7 +82,7 @@
             <div class="team-side team-1-side">
                 <h3 id="team1-input-label">Team 1</h3>
                 <div class="keyboard-input">
-                    <input type="text" id="team1-input" placeholder="Type and press ENTER" class="team-input">
+                    <input type="text" id="team1-input" placeholder="Tap keyboard or type" class="team-input" readonly>
                     <p id="team1-feedback" class="feedback"></p>
                 </div>
             </div>
@@ -92,8 +92,26 @@
             <div class="team-side team-2-side">
                 <h3 id="team2-input-label">Team 2</h3>
                 <div class="keyboard-input">
-                    <input type="text" id="team2-input" placeholder="Type and press ENTER" class="team-input">
+                    <input type="text" id="team2-input" placeholder="Tap keyboard or type" class="team-input" readonly>
                     <p id="team2-feedback" class="feedback"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="keyboards-container">
+            <div class="team-keyboard team-1-keyboard">
+                <div class="keyboard" id="keyboard-team1"></div>
+                <div class="keyboard-controls">
+                    <button class="keyboard-btn backspace" data-key="Backspace" id="backspace-team1">← Back</button>
+                    <button class="keyboard-btn submit" id="submit-team1">Submit</button>
+                </div>
+            </div>
+            
+            <div class="team-keyboard team-2-keyboard">
+                <div class="keyboard" id="keyboard-team2"></div>
+                <div class="keyboard-controls">
+                    <button class="keyboard-btn backspace" data-key="Backspace" id="backspace-team2">← Back</button>
+                    <button class="keyboard-btn submit" id="submit-team2">Submit</button>
                 </div>
             </div>
         </div>

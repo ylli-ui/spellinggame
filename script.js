@@ -60,6 +60,24 @@ const TENSES = [
     { key: 'presentContinuous', label: 'Type the present continuous tense (-ing)' }
 ];
 
+// Generate random questions pool
+let questionsPool = [];
+
+function generateQuestionsPool() {
+    questionsPool = [];
+    // Create all possible question combinations
+    for (let i = 0; i < VERBS.length; i++) {
+        for (let j = 0; j < TENSES.length; j++) {
+            questionsPool.push({ verbIndex: i, tenseIndex: j });
+        }
+    }
+    // Shuffle the pool
+    for (let i = questionsPool.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [questionsPool[i], questionsPool[j]] = [questionsPool[j], questionsPool[i]];
+    }
+}
+
 // Game State
 let gameState = {
     team1Name: 'Team 1',
@@ -67,15 +85,21 @@ let gameState = {
     team1Score: 0,
     team2Score: 0,
     gameDuration: 1,
-    currentVerbIndex: 0,
-    currentTenseIndex: 0,
+    currentQuestionIndex: 0,
     gameActive: false,
     timeRemaining: 60,
-    ropePosition: 150, // Center position
+    ropePosition: 150,
     timerInterval: null,
     team1Submitted: false,
     team2Submitted: false
 };
+
+// Keyboard layout
+const KEYBOARD_LAYOUT = [
+    'QWERTYUIOP',
+    'ASDFGHJKL',
+    'ZXCVBNM'
+];
 
 // DOM Elements
 const setupScreen = document.getElementById('setup-screen');
@@ -101,6 +125,52 @@ playAgainBtn.addEventListener('click', resetGame);
 team1Input.addEventListener('keypress', (e) => handleKeyPress(e, 'team1'));
 team2Input.addEventListener('keypress', (e) => handleKeyPress(e, 'team2'));
 
+// Initialize keyboards
+function initializeKeyboards() {
+    createKeyboard('team1');
+    createKeyboard('team2');
+}
+
+function createKeyboard(team) {
+    const keyboardElement = document.getElementById(`keyboard-${team}`);
+    keyboardElement.innerHTML = '';
+    
+    KEYBOARD_LAYOUT.forEach(row => {
+        row.split('').forEach(letter => {
+            const btn = document.createElement('button');
+            btn.className = 'keyboard-btn';
+            btn.textContent = letter;
+            btn.addEventListener('click', () => addLetter(letter, team));
+            keyboardElement.appendChild(btn);
+        });
+    });
+}
+
+function addLetter(letter, team) {
+    const input = team === 'team1' ? team1Input : team2Input;
+    input.value += letter.toLowerCase();
+}
+
+// Backspace functionality
+document.getElementById('backspace-team1').addEventListener('click', () => {
+    const val = team1Input.value;
+    team1Input.value = val.substring(0, val.length - 1);
+});
+
+document.getElementById('backspace-team2').addEventListener('click', () => {
+    const val = team2Input.value;
+    team2Input.value = val.substring(0, val.length - 1);
+});
+
+// Submit functionality
+document.getElementById('submit-team1').addEventListener('click', () => {
+    handleSubmit('team1');
+});
+
+document.getElementById('submit-team2').addEventListener('click', () => {
+    handleSubmit('team2');
+});
+
 // Functions
 function startGame() {
     gameState.team1Name = document.getElementById('team1-name').value || 'Team 1';
@@ -109,12 +179,14 @@ function startGame() {
     gameState.timeRemaining = gameState.gameDuration;
     gameState.team1Score = 0;
     gameState.team2Score = 0;
-    gameState.currentVerbIndex = 0;
-    gameState.currentTenseIndex = 0;
+    gameState.currentQuestionIndex = 0;
     gameState.ropePosition = 150;
     gameState.gameActive = true;
     gameState.team1Submitted = false;
     gameState.team2Submitted = false;
+
+    // Generate random questions
+    generateQuestionsPool();
 
     // Update UI
     document.getElementById('team1-name-display').textContent = gameState.team1Name;
@@ -126,21 +198,29 @@ function startGame() {
     setupScreen.classList.remove('active');
     gameScreen.classList.add('active');
 
+    // Initialize keyboards
+    initializeKeyboards();
+
     // Start game
     loadNextQuestion();
     startTimer();
 }
 
 function loadNextQuestion() {
-    const currentVerb = VERBS[gameState.currentVerbIndex];
-    const currentTense = TENSES[gameState.currentTenseIndex];
+    if (gameState.currentQuestionIndex >= questionsPool.length) {
+        generateQuestionsPool();
+        gameState.currentQuestionIndex = 0;
+    }
+    
+    const currentQuestion = questionsPool[gameState.currentQuestionIndex];
+    const currentVerb = VERBS[currentQuestion.verbIndex];
+    const currentTense = TENSES[currentQuestion.tenseIndex];
     
     verbBase.textContent = currentVerb.base;
     tenseLabel.textContent = currentTense.label;
     
     team1Input.value = '';
     team2Input.value = '';
-    team1Input.focus();
     
     team1Feedback.textContent = '';
     team2Feedback.textContent = '';
@@ -155,10 +235,14 @@ function loadNextQuestion() {
 
 function handleKeyPress(e, team) {
     if (!gameState.gameActive) return;
-    
     if (e.key !== 'Enter') return;
     
     e.preventDefault();
+    handleSubmit(team);
+}
+
+function handleSubmit(team) {
+    if (!gameState.gameActive) return;
     
     // Check if already submitted
     if (team === 'team1' && gameState.team1Submitted) return;
@@ -166,8 +250,10 @@ function handleKeyPress(e, team) {
     
     const input = team === 'team1' ? team1Input.value.trim().toLowerCase() : team2Input.value.trim().toLowerCase();
     const feedback = team === 'team1' ? team1Feedback : team2Feedback;
-    const currentVerb = VERBS[gameState.currentVerbIndex];
-    const currentTense = TENSES[gameState.currentTenseIndex];
+    
+    const currentQuestion = questionsPool[gameState.currentQuestionIndex];
+    const currentVerb = VERBS[currentQuestion.verbIndex];
+    const currentTense = TENSES[currentQuestion.tenseIndex];
     const correctAnswer = currentVerb[currentTense.key].toLowerCase();
     
     if (input === '') return;
@@ -200,14 +286,7 @@ function handleKeyPress(e, team) {
     // Check if both teams have submitted
     if (gameState.team1Submitted && gameState.team2Submitted) {
         setTimeout(() => {
-            gameState.currentTenseIndex++;
-            if (gameState.currentTenseIndex >= TENSES.length) {
-                gameState.currentTenseIndex = 0;
-                gameState.currentVerbIndex++;
-                if (gameState.currentVerbIndex >= VERBS.length) {
-                    gameState.currentVerbIndex = 0;
-                }
-            }
+            gameState.currentQuestionIndex++;
             loadNextQuestion();
         }, 1500);
     }
@@ -222,15 +301,6 @@ function moveRope(team) {
     }
     
     ropeKnot.setAttribute('cx', gameState.ropePosition);
-    
-    // Add animation
-    if (team === 'team1') {
-        document.querySelector('.team-1-characters').classList.add('pull-animation');
-        setTimeout(() => document.querySelector('.team-1-characters').classList.remove('pull-animation'), 500);
-    } else {
-        document.querySelector('.team-2-characters').classList.add('pull-animation');
-        setTimeout(() => document.querySelector('.team-2-characters').classList.remove('pull-animation'), 500);
-    }
 }
 
 function startTimer() {
@@ -290,8 +360,7 @@ function resetGame() {
     // Reset state
     gameState.team1Score = 0;
     gameState.team2Score = 0;
-    gameState.currentVerbIndex = 0;
-    gameState.currentTenseIndex = 0;
+    gameState.currentQuestionIndex = 0;
     gameState.ropePosition = 150;
     gameState.gameActive = false;
     gameState.team1Submitted = false;
